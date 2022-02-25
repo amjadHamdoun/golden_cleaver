@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "252537162701",
+    "project_id": "golden-cleaver-7a02c",
+    "storage_bucket": "golden-cleaver-7a02c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252537162701:android:f2be0c36781d04ef3b1284",
+        "android_client_info": {
+          "package_name": "com.golden.golden_cleaver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252537162701-apgga9rjqv34vr00r5dhtm5h7426n8em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLTkIeCfqCRkmFz_iTgkZMxnD5iWtMw9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252537162701-apgga9rjqv34vr00r5dhtm5h7426n8em.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

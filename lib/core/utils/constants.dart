@@ -1,0 +1,37 @@
+
+
+
+class Endpoints {
+
+  static const BASE_URL='https://sh.const-tech.biz/api/';
+  static const Login='login';
+  static const User='user';
+  static const Sliders='sliders';
+  static const Products='products';
+  static const Categories='categories';
+  static const Register='register';
+  static const Banks='banks';
+  static const Cities='cities';
+  static const Sections='sections';
+  static const Notifications='notifications';
+  static const Carts='carts';
+  static const Orders='carts';
+  static const Settings='settings';
+
+
+
+}
+
+class Er
+{
+
+  static String error = "حدث خطأ ما";
+  static String networkError = "تحقق من الاتصال بالانترنت";
+
+}
+
+
+
+
+
+
