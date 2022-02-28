@@ -10,6 +10,7 @@ import 'package:golden_cleaver/features/Screen/bank_transfer/bank_transfer.dart'
 import 'package:golden_cleaver/features/Screen/bank_transfer/bloc/MyBankBloc.dart';
 import 'package:golden_cleaver/features/Screen/bank_transfer/bloc/myBank_state.dart';
 import 'package:golden_cleaver/features/Screen/credit_card/credit_card.dart';
+import 'package:golden_cleaver/features/Screen/pages/pages.dart';
 
 
 class PaymentType extends StatefulWidget {
@@ -251,7 +252,7 @@ class _PaymentTypeState extends State<PaymentType> {
                               SizedBox(
                                 width: 5.w,
                               ),
-                              Text('حي الفاروق الجنوبية',
+                              Text(state.cityName!+' '+state.sectionName!,
                                 style: TextStyle(
                                     fontSize: 16.sp,
                                     color: LightThemeColors.darkBackgroundColor,
@@ -272,7 +273,7 @@ class _PaymentTypeState extends State<PaymentType> {
                           padding:  EdgeInsets.symmetric(vertical: 5.0.h
                               ,horizontal: 4.w
                           ),
-                          child: Text('0506499275',
+                          child: Text(state.home!,
                             style: TextStyle(
                                 fontSize: 12.sp,
                                 color: LightThemeColors.darkBackgroundColor,
@@ -776,6 +777,123 @@ class _PaymentTypeState extends State<PaymentType> {
 
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+
+          showUnselectedLabels: true,
+          onTap: (int index) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    Pages(
+                      restCart: false,
+                      pageNumber: index,
+                    ),
+              ),
+                  (route) => false,
+            );
+          },
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/house-damage.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('الرئيسية',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+
+            // BottomNavigationBarItem(
+            //     icon: SvgPicture.asset('assets/icons/dice.svg',
+            //       color: select == 1 ? LightThemeColors.primaryColor :
+            //       LightThemeColors.lightGreyShade400,
+            //     ),
+            //     title: Text('الاقسام',
+            //       style: TextStyle(
+            //         fontSize: 15.sp,
+            //         color: select == 1 ? LightThemeColors.primaryColor :
+            //         LightThemeColors.lightGreyShade400,
+            //       ),
+            //     )
+            //
+            // ),
+
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/copy.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('طلباتي',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+            BottomNavigationBarItem(
+                icon: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    SvgPicture.asset('assets/icons/shopping-basket.svg',
+                      color:
+                      LightThemeColors.lightGreyShade400,
+                    ),
+                    if(state.carts!.length>0)
+                      Positioned(
+                        left: 20.w,
+                        bottom: 10.h,
+                        child: Container(
+                          child: Text(state.carts!.length.toString(),
+                            style: TextStyle(
+                                color: LightThemeColors.backgroundColor,
+                                fontSize: 12.sp
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          width: 23.w,
+                          height: 23.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                            LightThemeColors.lightGreyShade400,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                title: Text('السلة',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/user-circle.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('حسابي',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+          ],
         ),
       ),
     );

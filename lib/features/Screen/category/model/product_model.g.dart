@@ -18,6 +18,9 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
     additions: (json['additions'] as List<dynamic>)
         .map((e) => AdditionModel.fromJson(e as Map<String, dynamic>))
         .toList(),
+    comments: (json['comments'] as List<dynamic>)
+        .map((e) => CommentModel.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -29,4 +32,5 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'content': instance.content,
       'sizes': instance.sizes,
       'additions': instance.additions,
+      'comments': instance.comments,
     };

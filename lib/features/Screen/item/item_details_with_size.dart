@@ -5,16 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:golden_cleaver/Globals.dart';
 import 'package:golden_cleaver/core/utils/light_theme_colors.dart';
+import 'package:golden_cleaver/features/Screen/MyAccount/model/data.dart';
 import 'package:golden_cleaver/features/Screen/basket/model/addition.dart';
 import 'package:golden_cleaver/features/Screen/basket/model/basket.dart';
+import 'package:golden_cleaver/features/Screen/category/model/comment_model.dart';
 import 'package:golden_cleaver/features/Screen/category/model/product_model.dart';
 import 'package:golden_cleaver/features/Screen/category/model/size_model.dart';
 import 'package:golden_cleaver/features/Screen/pages/bloc/PagesBloc.dart';
 import 'package:golden_cleaver/features/Screen/pages/bloc/pages_state.dart';
 import 'package:golden_cleaver/features/Screen/pages/pages.dart';
 import 'dart:ui' as ui;
+
+import '../../../Preference.dart';
 
 
 class ItemDetailsWithSizes extends StatefulWidget {
@@ -43,7 +48,7 @@ class _ItemDetailsWithSizesState extends State<ItemDetailsWithSizes> {
   late Basket cart;
   List<String> kilo=List.generate(100, (index) => (index+1).toString());
   List<String> grm = List.generate(20, (index) => (50*(index)).toString());
-
+  TextEditingController textEditingController=TextEditingController();
 
   @override
   void initState() {
@@ -120,7 +125,7 @@ class _ItemDetailsWithSizesState extends State<ItemDetailsWithSizes> {
                               MaterialPageRoute(
                                 builder: (BuildContext context) => Pages(
                                   restCart: false,
-                                  pageNumber: 3,
+                                  pageNumber: 2,
                                 ),
                               ),
                                   (route) => false,
@@ -774,10 +779,96 @@ class _ItemDetailsWithSizesState extends State<ItemDetailsWithSizes> {
 
                     ],
                   ),
-                  SizedBox(height: 10.h,),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: textEditingController,
+                      cursorColor: Colors.black,
+                      style: TextStyle(
+                          fontFamily: 'JF Flat',
+                          fontSize: 15.sp,
+                          height: 0.8.h,
+                          color: Colors.black),
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        filled: true,
+                        labelText: 'تعليق',
+                        fillColor:Colors.white,
+                        border: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: LightThemeColors.lightGreyShade200, width: 1),
+                        ),
+                        hintText: 'تعليق',
+                        hintStyle: TextStyle(
+
+                          fontSize: 15.sp,
+                          color:  Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5.h,),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: (){
+                            if(textEditingController.text.length>0)
+                              {
+                                widget.productModel.comments.add(
+                                    CommentModel(content:
+                                    textEditingController.text,
+                                        user: UserData(mobile: '',
+                                        email: '',
+                                          name: Preferences.getUserName()
+                                        ),
+                                        created_at: DateTime.now())
+                                );
+                                setState(() {
+
+                                });
+                                widget.bloc.onAddCommentEvent(
+                                    productId: widget.productModel.id!,
+                                    content: textEditingController.text);
+                                textEditingController.clear();
+                              }
+
+                            else
+                              Fluttertoast.showToast(
+                                  msg: "يرجى ادخال تعليق",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: LightThemeColors
+                                      .lightGreyShade400,
+                                  textColor: LightThemeColors
+                                      .backgroundColor,
+                                  fontSize: 15.0.sp);
+                          },
+                          child: Text(
+                            'اضافة',
+                            style: TextStyle(
+                              fontFamily: 'JF Flat',
+                              fontSize: 18.sp,
+                              color: const Color(0xffffffff),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: LightThemeColors.primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 5,
+                    reverse: true,
+                    itemCount: widget.productModel.comments.length,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Column(
@@ -794,7 +885,7 @@ class _ItemDetailsWithSizesState extends State<ItemDetailsWithSizes> {
                                   children: [
                                     SvgPicture.asset('assets/icons/user_comment.svg',
                                     ),
-                                    Text('عبد الله الخالدي',
+                                    Text(widget.productModel.comments[index].user!.name!,
                                       style: TextStyle(
                                           fontSize: 12.sp,
                                           color: LightThemeColors.darkBackgroundColor,
@@ -807,7 +898,8 @@ class _ItemDetailsWithSizesState extends State<ItemDetailsWithSizes> {
                                   ],
                                 ),
 
-                                Text(formattedDate,
+                                Text(DateFormat('yyyy-MM-dd','en').format(
+                                    (widget.productModel.comments[index].created_at)),
                                   style: TextStyle(
                                       fontSize: 11.sp,
                                       color: LightThemeColors.primaryColor,
@@ -836,10 +928,10 @@ class _ItemDetailsWithSizesState extends State<ItemDetailsWithSizes> {
                                         ),),
                                       borderRadius: BorderRadius.circular(7)),
                                   child: Padding(
-                                    padding:  EdgeInsets.only(bottom: 37.h,right: 3.w,
-                                        top: 4.h
+                                    padding:  EdgeInsets.only(bottom: 16.h,right: 12.w,
+                                        top: 16.h,left: 12.w,
                                     ),
-                                    child: Text('  متجر رائع  جد  ',
+                                    child: Text(widget.productModel.comments[index].content!,
                                       style: TextStyle(
                                           fontSize: 11.sp,
                                           color: LightThemeColors.darkBackgroundColor,

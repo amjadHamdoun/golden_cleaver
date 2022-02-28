@@ -34,7 +34,9 @@ abstract class RegisterState implements Built<RegisterState, RegisterStateBuilde
           statue: false,
           message: '',
           data: Data(
-              api_token: ''
+              api_token: '',
+                id: 0,
+            name: ''
           )
       )
 

@@ -114,7 +114,7 @@ class _ItemDetailsFromCategoryState extends State<ItemDetailsFromCategory> {
                               MaterialPageRoute(
                                 builder: (BuildContext context) => Pages(
                                   restCart: false,
-                                  pageNumber: 3,
+                                  pageNumber: 2,
                                 ),
                               ),
                                   (route) => false,

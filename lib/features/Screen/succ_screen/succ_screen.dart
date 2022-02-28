@@ -56,7 +56,7 @@ class _SuccScreenState extends State<SuccScreen> {
                               builder: (BuildContext context) =>
                                   Pages(
                                     restCart: true,
-                                    pageNumber: 2,
+                                    pageNumber: 1,
                                   ),
                             ),
                                 (route) => false,
@@ -242,7 +242,7 @@ class _SuccScreenState extends State<SuccScreen> {
                                     builder: (BuildContext context) =>
                                         Pages(
                                           restCart: true,
-                                          pageNumber: 2,
+                                          pageNumber: 1,
                                         ),
                                   ),
                                       (route) => false,

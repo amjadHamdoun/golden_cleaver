@@ -189,15 +189,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                 )),
                               );
                             },
-                            onLongPress: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => OrderDetails(
-                                  data: state.orderModel!.data![index],
-                                )),
-                              );
 
-                            },
                             child: Column(
                               children: [
                                 Padding(
@@ -206,6 +198,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
 
@@ -226,7 +219,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 8.h,),
+                                            SizedBox(height: 16.h,),
                                             Row(
                                               children: [
                                                 Text('تاريخ الطلب'+'     '+format.format(state.orderModel!.data![index].created_at!)
@@ -240,6 +233,36 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.ellipsis,
                                                 ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 16.h,),
+
+                                            Row(
+                                              children: [
+
+                                                InkWell(
+                                                  onTap: (){
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(builder: (context) => OrderDetails(
+                                                        data: state.orderModel!.data![index],
+                                                      )),
+                                                    );
+                                                  },
+                                                  child: Text('تفاصيل الطلب'
+                                                    ,
+                                                    style: TextStyle(
+                                                        fontSize: 12.sp,
+                                                        color:   Color(0xff2D9CC5),
+                                                        fontFamily: "Nahdi",
+                                                        fontWeight: FontWeight.w900,
+
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                )
+
                                               ],
                                             ),
                                           ],
@@ -309,7 +332,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                               ],
                             ),
                           );
-                        else   if(state.orderModel!.data![index].status=='accepted ')
+                        else   if(state.orderModel!.data![index].status=='ongoing')
                           return GestureDetector(
                             onTap: (){
                               Navigator.push(
@@ -321,15 +344,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                 )),
                               );
                             },
-                            onLongPress: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => OrderDetails(
-                                  data: state.orderModel!.data![index],
-                                )),
-                              );
 
-                            },
                             child: Column(
                               children: [
                                 Padding(
@@ -338,6 +353,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
 
@@ -358,7 +374,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 8.h,),
+                                            SizedBox(height: 16.h,),
                                             Row(
                                               children: [
                                                 Text('تاريخ الطلب'+'     '+format.format(state.orderModel!.data![index].created_at!),
@@ -371,6 +387,36 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.ellipsis,
                                                 ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 16.h,),
+
+                                            Row(
+                                              children: [
+
+                                                InkWell(
+                                                  onTap: (){
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(builder: (context) => OrderDetails(
+                                                        data: state.orderModel!.data![index],
+                                                      )),
+                                                    );
+                                                  },
+                                                  child: Text('تفاصيل الطلب'
+                                                    ,
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      color:   Color(0xff2D9CC5),
+                                                      fontFamily: "Nahdi",
+                                                      fontWeight: FontWeight.w900,
+
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                )
+
                                               ],
                                             ),
                                           ],
@@ -440,7 +486,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                               ],
                             ),
                           );
-                        else if(state.orderModel!.data![index].status=='refused ')
+                        else if(state.orderModel!.data![index].status=='canceled')
                           return GestureDetector(
                             onTap: (){
                               Navigator.push(
@@ -469,6 +515,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
 
@@ -489,7 +536,7 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 8.h,),
+                                            SizedBox(height: 16.h,),
                                             Row(
                                               children: [
                                                 Text('تاريخ الطلب'+'     '+format.format(state.orderModel!.data![index].created_at!),
@@ -502,6 +549,35 @@ class _OrdersState extends State<Orders>  with AutomaticKeepAliveClientMixin{
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.ellipsis,
                                                 ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 16.h,),
+                                            Row(
+                                              children: [
+
+                                                InkWell(
+                                                  onTap: (){
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(builder: (context) => OrderDetails(
+                                                        data: state.orderModel!.data![index],
+                                                      )),
+                                                    );
+                                                  },
+                                                  child: Text('تفاصيل الطلب'
+                                                    ,
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      color:   Color(0xff2D9CC5),
+                                                      fontFamily: "Nahdi",
+                                                      fontWeight: FontWeight.w900,
+
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                )
+
                                               ],
                                             ),
                                           ],

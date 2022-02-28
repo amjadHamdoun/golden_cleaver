@@ -6,8 +6,8 @@ part of 'data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Data _$DataFromJson(Map<String, dynamic> json) {
-  return Data(
+CityData _$CityDataFromJson(Map<String, dynamic> json) {
+  return CityData(
     id: json['id'] as int?,
     name: json['name'] as String?,
     delivery_price: (json['delivery_price'] as num?)?.toDouble(),
@@ -15,7 +15,7 @@ Data _$DataFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+Map<String, dynamic> _$CityDataToJson(CityData instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'delivery_price': instance.delivery_price,

@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:golden_cleaver/Globals.dart';
 import 'package:golden_cleaver/Preference.dart';
@@ -34,7 +32,13 @@ class RegisterBloc extends Bloc<RegisterEvents, RegisterState> {
         ..isSuccess = false
         ..errorMessage = ''
         ..registerModel = RegisterResponseModel(
-            code: 0, statue: false, message: '', data: Data(api_token: '')));
+            code: 0, statue: false, message: '',
+            data: Data(
+              api_token: '',
+             id: 0,
+              name: ''
+
+            )));
       final result = await registerRemoteDataSource.register(
           email:event.email, mobile: event.mobile,name: event.name, password: event.password, password_confirmation: event.password_confirmation);
       print("result");
@@ -51,6 +55,10 @@ class RegisterBloc extends Bloc<RegisterEvents, RegisterState> {
           {
             Preferences.saveUserToken(r.data!.api_token!);
             Global.userToken=r.data!.api_token;
+            Preferences.saveUserId(r.data!.id!);
+            Global.userId=r.data!.id;
+            Preferences.saveUserName(r.data!.name!);
+
           }
         yield state.rebuild((b) => b
           ..isLoading = false

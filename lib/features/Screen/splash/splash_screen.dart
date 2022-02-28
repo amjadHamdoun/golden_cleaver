@@ -50,6 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
         {
           Global.tax=state.settingsModel!.data!.tax_amount;
           Global.userToken = Preferences.getUserToken();
+          Global.userId= Preferences.getUserId();
 
           if (Global.userToken!.length > 0) {
             Navigator.pushReplacement(

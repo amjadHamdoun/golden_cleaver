@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'data.g.dart';
 
 @JsonSerializable()
-class Data {
+class CityData {
   final int? id;
   final String? name;
   final double? delivery_price;
@@ -12,11 +12,11 @@ class Data {
 
 
 
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  Map<String, dynamic> toJson() => _$CityDataToJson(this);
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  factory CityData.fromJson(Map<String, dynamic> json) => _$CityDataFromJson(json);
 
-  Data({
+  CityData({
     required this.id,
     required this.name,
     required this.delivery_price,

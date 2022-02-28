@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +7,7 @@ import 'package:golden_cleaver/core/utils/light_theme_colors.dart';
 import 'package:golden_cleaver/features/Screen/category/model/data.dart';
 import 'package:golden_cleaver/features/Screen/item/item_details.dart';
 import 'package:golden_cleaver/features/Screen/pages/bloc/PagesBloc.dart';
+import 'package:golden_cleaver/features/Screen/pages/pages.dart';
 import 'package:golden_cleaver/features/Screen/products/products.dart';
 
 class SubCategory extends StatefulWidget {
@@ -212,6 +212,103 @@ class _SubCategoryState extends State<SubCategory> {
 
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+
+          showUnselectedLabels: true,
+          onTap: (int index) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    Pages(
+                      restCart: false,
+                      pageNumber: index,
+                    ),
+              ),
+                  (route) => false,
+            );
+          },
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/house-damage.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('الرئيسية',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+
+            // BottomNavigationBarItem(
+            //     icon: SvgPicture.asset('assets/icons/dice.svg',
+            //       color: select == 1 ? LightThemeColors.primaryColor :
+            //       LightThemeColors.lightGreyShade400,
+            //     ),
+            //     title: Text('الاقسام',
+            //       style: TextStyle(
+            //         fontSize: 15.sp,
+            //         color: select == 1 ? LightThemeColors.primaryColor :
+            //         LightThemeColors.lightGreyShade400,
+            //       ),
+            //     )
+            //
+            // ),
+
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/copy.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('طلباتي',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+            BottomNavigationBarItem(
+                icon: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    SvgPicture.asset('assets/icons/shopping-basket.svg',
+                      color:
+                      LightThemeColors.lightGreyShade400,
+                    ),
+
+                  ],
+                ),
+                title: Text('السلة',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/user-circle.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('حسابي',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+          ],
         ),
       ),
     );

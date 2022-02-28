@@ -9,7 +9,7 @@ part of 'section_model.dart';
 SectionModel _$SectionModelFromJson(Map<String, dynamic> json) {
   return SectionModel(
     data: (json['data'] as List<dynamic>?)
-        ?.map((e) => Data.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => SectionData.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }

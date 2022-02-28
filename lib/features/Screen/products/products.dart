@@ -6,6 +6,7 @@ import 'package:golden_cleaver/core/utils/light_theme_colors.dart';
 import 'package:golden_cleaver/features/Screen/category/model/sub_category_model.dart';
 import 'package:golden_cleaver/features/Screen/item/item_details_from_category.dart';
 import 'package:golden_cleaver/features/Screen/pages/bloc/PagesBloc.dart';
+import 'package:golden_cleaver/features/Screen/pages/pages.dart';
 import 'package:golden_cleaver/features/Screen/sizes/sizes.dart';
 
 class Products extends StatefulWidget {
@@ -73,44 +74,44 @@ class _ProductsState extends State<Products> {
 
               SizedBox(height: 10.h,),
 
-              Row(
-                children: [
-
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                color:
-                                LightThemeColors.darkBackgroundColor,
-                              )
-                          )
-                      ),
-                      child: Padding(
-                        padding:  EdgeInsets.symmetric(
-                            vertical: 8.h
-                        ),
-                        child: Text('المنتجات ضمن '+' '+widget.subCategory.name!,
-                          style: TextStyle(
-                              fontSize: 16.sp,
-                              color:
-                              LightThemeColors.darkBackgroundColor,
-                              fontFamily: "Nahdi",
-                              fontWeight: FontWeight.w900
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Expanded(
-                    child: SizedBox(),
-                  ),
-
-                ],
-              ),
+              // Row(
+              //   children: [
+              //
+              //     Expanded(
+              //       flex: 2,
+              //       child: Container(
+              //         decoration: BoxDecoration(
+              //             border: Border(
+              //                 bottom: BorderSide(
+              //                   color:
+              //                   LightThemeColors.darkBackgroundColor,
+              //                 )
+              //             )
+              //         ),
+              //         child: Padding(
+              //           padding:  EdgeInsets.symmetric(
+              //               vertical: 8.h
+              //           ),
+              //           child: Text('المنتجات ضمن '+' '+widget.subCategory.name!,
+              //             style: TextStyle(
+              //                 fontSize: 16.sp,
+              //                 color:
+              //                 LightThemeColors.darkBackgroundColor,
+              //                 fontFamily: "Nahdi",
+              //                 fontWeight: FontWeight.w900
+              //             ),
+              //             textAlign: TextAlign.center,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //
+              //     Expanded(
+              //       child: SizedBox(),
+              //     ),
+              //
+              //   ],
+              // ),
               SizedBox(height: 10.h,),
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 12.w),
@@ -208,6 +209,103 @@ class _ProductsState extends State<Products> {
 
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+
+          showUnselectedLabels: true,
+          onTap: (int index) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    Pages(
+                      restCart: false,
+                      pageNumber: index,
+                    ),
+              ),
+                  (route) => false,
+            );
+          },
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/house-damage.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('الرئيسية',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+
+            // BottomNavigationBarItem(
+            //     icon: SvgPicture.asset('assets/icons/dice.svg',
+            //       color: select == 1 ? LightThemeColors.primaryColor :
+            //       LightThemeColors.lightGreyShade400,
+            //     ),
+            //     title: Text('الاقسام',
+            //       style: TextStyle(
+            //         fontSize: 15.sp,
+            //         color: select == 1 ? LightThemeColors.primaryColor :
+            //         LightThemeColors.lightGreyShade400,
+            //       ),
+            //     )
+            //
+            // ),
+
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/copy.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('طلباتي',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+            BottomNavigationBarItem(
+                icon: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    SvgPicture.asset('assets/icons/shopping-basket.svg',
+                      color:
+                      LightThemeColors.lightGreyShade400,
+                    ),
+
+                  ],
+                ),
+                title: Text('السلة',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/user-circle.svg',
+                  color:
+                  LightThemeColors.lightGreyShade400,
+                ),
+                title: Text('حسابي',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color:
+                    LightThemeColors.lightGreyShade400,
+                  ),
+                )
+
+            ),
+          ],
         ),
       ),
     );

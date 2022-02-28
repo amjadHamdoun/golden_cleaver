@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:golden_cleaver/Preference.dart';
 import 'package:golden_cleaver/features/Screen/MyAccount/api/notifications_remote.dart';
 import 'package:golden_cleaver/features/Screen/MyAccount/api/user_details_remote.dart';
+import 'package:golden_cleaver/features/Screen/MyAccount/api/user_update_remote.dart';
 import 'package:golden_cleaver/features/Screen/MyAccount/model/data.dart';
 import 'package:golden_cleaver/features/Screen/MyAccount/model/notification/notification_model.dart';
 import 'package:golden_cleaver/features/Screen/MyAccount/model/user_model.dart';
@@ -9,10 +11,12 @@ import 'package:golden_cleaver/features/Screen/basket/model/basket.dart';
 
 import 'package:golden_cleaver/features/Screen/category/api/category_remote.dart';
 import 'package:golden_cleaver/features/Screen/category/model/category_model.dart';
+import 'package:golden_cleaver/features/Screen/contact_us/api/contact_us_remote.dart';
 import 'package:golden_cleaver/features/Screen/home/api/product_remote.dart';
 import 'package:golden_cleaver/features/Screen/home/api/slider_remote.dart';
 import 'package:golden_cleaver/features/Screen/home/model/product/product_model.dart';
 import 'package:golden_cleaver/features/Screen/home/model/slider/slider_model.dart';
+import 'package:golden_cleaver/features/Screen/item/api/add_comment_data_source.dart';
 import 'package:golden_cleaver/features/Screen/orders/api/oders_remote.dart';
 import 'package:golden_cleaver/features/Screen/orders/model/orders_model.dart';
 import 'package:hive/hive.dart';
@@ -27,6 +31,10 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
   CategoryRemoteDataSource categoryRemoteDataSource;
   NotificationRemoteDataSource notificationRemoteDataSource;
   OrdersRemoteDataSource ordersRemoteDataSource;
+  AddCommentRemoteDataSource addCommentRemoteDataSource;
+  UserUpdateRemoteDataSource userUpdateRemoteDataSource;
+  ContactUsRemoteDataSource contactUsRemoteDataSource;
+
 
   PagesBloc({
     required this.userDetailsRemoteDataSource,
@@ -34,14 +42,35 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
     required this.categoryRemoteDataSource,
     required this.productRemoteDataSource,
     required this.notificationRemoteDataSource,
-    required this.ordersRemoteDataSource
+    required this.ordersRemoteDataSource,
+    required this.addCommentRemoteDataSource,
+    required this.userUpdateRemoteDataSource,
+    required this.contactUsRemoteDataSource
   }) : super(PagesState.initial());
 
   void onUserDetailsEvent() {
     add(UserDetailsEvent(
     ));
   }
-
+  void onUserUpdatesEvent(
+      {required String name,required String email,
+        required String mobile,required String city}) {
+    add(UpdateUserEvent(city:city,
+      email: email,
+      mobile: mobile,
+      name: name
+    ));
+  }
+  void onContactUsEvent(
+      {required String name,required String address,
+        required String phone,required String content}) {
+    add(ContactUsEvent(
+      name: name,
+      content: content,
+      address: address,
+      phone: phone
+    ));
+  }
   void onGetNotificationsEvent() {
     add(GetNotificationsEvent(
     ));
@@ -56,6 +85,9 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
   }
   void onAddCartsEvent(Basket cart) {
     add(AddCartsEvent(cart));
+  }
+  void onAddCommentEvent({required int productId, required String content}) {
+    add(AddCommentEvent(content: content,productId: productId));
   }
   void onGetProductsEvent() {
     add(GetProductsEvent(
@@ -81,10 +113,11 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
         ..isLoading = true
         ..isSuccess = false
         ..errorMessage=''
-        ..userModel=UserModel(data: Data(
+        ..userModel=UserModel(data: UserData(
           email: '',
           name: '',
-          photo: '',
+
+          mobile: '',
         ))
       );
       final result = await userDetailsRemoteDataSource.userDetails(
@@ -93,13 +126,14 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
         print("result");
       print(result);
       print("result");
+
       yield* result.fold((l) async* {
         yield state.rebuild((b) => b
           ..isLoading = false
           ..isSuccess = false
           ..errorMessage = l);
       }, (r) async* {
-
+        Preferences.saveUserName(r.data!.name!);
         print('sucesss');
 
         yield state.rebuild((b) => b
@@ -122,9 +156,7 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
       final result = await sliderRemoteDataSource.getSliders(
 
       );
-      print("result");
-      print(result);
-      print("result");
+
       yield* result.fold(
               (l) async* {
         yield state.rebuild((b) => b
@@ -143,6 +175,89 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
           ..sliderModel=r
         );
       });
+    }
+
+
+    else  if (event is UpdateUserEvent) {
+      yield state.rebuild((b) => b
+        ..isLoading = true
+        ..isSuccess = false
+        ..errorMessage=''
+
+
+      );
+      final result = await userUpdateRemoteDataSource.userUpdate(
+        name: event.name,
+        mobile: event.mobile,
+        email: event.email,
+        city: event.city
+      );
+      print("result");
+      print(result);
+      print("result");
+      yield* result.fold(
+              (l) async* {
+            yield state.rebuild((b) => b
+              ..isLoading = false
+              ..isSuccess = false
+              ..errorMessage = l);
+          }, (r) async* {
+
+        print('sucesss');
+        yield state.rebuild((b) => b
+          ..isLoading = false
+          ..isSuccess=true
+          ..errorMessage = ''
+
+        );
+      });
+      yield state.rebuild((b) => b
+        ..isLoading = false
+        ..isSuccess=false
+        ..errorMessage = ''
+
+      );
+    }
+
+    else  if (event is ContactUsEvent) {
+      yield state.rebuild((b) => b
+        ..isLoading = true
+        ..isSuccess = false
+        ..errorMessage=''
+
+
+      );
+      final result = await contactUsRemoteDataSource.contactUs(
+          name: event.name,
+          phone: event.phone,
+          address: event.address,
+          content: event.content
+      );
+      print("result");
+      print(result);
+      print("result");
+      yield* result.fold(
+              (l) async* {
+            yield state.rebuild((b) => b
+              ..isLoading = false
+              ..isSuccess = false
+              ..errorMessage = l);
+          }, (r) async* {
+
+        print('sucesss');
+        yield state.rebuild((b) => b
+          ..isLoading = false
+          ..isSuccess=true
+          ..errorMessage = ''
+
+        );
+      });
+      yield state.rebuild((b) => b
+        ..isLoading = false
+        ..isSuccess=false
+        ..errorMessage = ''
+
+      );
     }
 
     else  if (event is GetProductsEvent) {
@@ -179,6 +294,12 @@ class PagesBloc extends Bloc<PagesEvents, PagesState> {
         );
       });
     }
+
+    else if(event is AddCommentEvent)
+      {
+        addCommentRemoteDataSource.addComment
+          (event.productId, event.content);
+      }
 
     else  if (event is GetCategoriesEvent) {
       if(event.api||state.categoryModel!.data!.length==0)

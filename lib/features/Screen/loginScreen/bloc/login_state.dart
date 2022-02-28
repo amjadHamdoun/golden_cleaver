@@ -33,7 +33,11 @@ part 'login_state.g.dart';
             statue: false,
           message: '',
           data: Data(
-            api_token: ''
+            api_token: '',
+            id: 0,
+            name: ''
+
+
           )
         )
 

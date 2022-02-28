@@ -492,7 +492,7 @@ class _CreditCardState extends State<CreditCard> {
                                   MaterialPageRoute(
                                     builder: (BuildContext context) => Pages(
                                       restCart: true,
-                                      pageNumber: 2,
+                                      pageNumber: 1,
                                     ),
                                   ),
                                       (route) => false,

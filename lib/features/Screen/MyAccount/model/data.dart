@@ -4,21 +4,23 @@ import 'package:json_annotation/json_annotation.dart';
 part 'data.g.dart';
 
 @JsonSerializable()
-class Data {
+class UserData {
 
 
   final String? name;
   final String? email;
-  final String? photo;
+  final String? mobile;
 
-  Map<String, dynamic> toJson() => _$DataToJson(this);
-  factory Data.fromJson(Map<String, dynamic> json) =>
-      _$DataFromJson(json);
 
-  Data(
+  Map<String, dynamic> toJson() => _$UserDataToJson(this);
+  factory UserData.fromJson(Map<String, dynamic> json) =>
+      _$UserDataFromJson(json);
+
+  UserData(
       {
         required  this.name,
         required  this.email,
-        required  this.photo,
+        required  this.mobile,
+
       });
 }

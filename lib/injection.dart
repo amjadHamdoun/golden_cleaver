@@ -5,14 +5,17 @@ import 'package:get_it/get_it.dart';
 import 'package:golden_cleaver/features/Screen/MyAccount/api/user_details_remote.dart';
 import 'core/utils/constants.dart';
 import 'features/Screen/MyAccount/api/notifications_remote.dart';
+import 'features/Screen/MyAccount/api/user_update_remote.dart';
 import 'features/Screen/add_address/api/city_remote.dart';
 import 'features/Screen/add_address/api/section_remote.dart';
 import 'features/Screen/bank_transfer/api/carts_remote.dart';
 import 'features/Screen/bank_transfer/api/mybank_remote.dart';
 import 'features/Screen/bank_transfer/bloc/MyBankBloc.dart';
 import 'features/Screen/category/api/category_remote.dart';
+import 'features/Screen/contact_us/api/contact_us_remote.dart';
 import 'features/Screen/home/api/product_remote.dart';
 import 'features/Screen/home/api/slider_remote.dart';
+import 'features/Screen/item/api/add_comment_data_source.dart';
 import 'features/Screen/loginScreen/api/log_in_remote.dart';
 import 'features/Screen/loginScreen/bloc/LoginBloc.dart';
 import 'features/Screen/orders/api/oders_remote.dart';
@@ -38,9 +41,9 @@ Future<void> init() async {
     () {
       final dio = Dio(
         BaseOptions(
-          connectTimeout: 12000,
-          receiveTimeout: 12000,
-          sendTimeout: 12000,
+          connectTimeout: 14000,
+          receiveTimeout: 14000,
+          sendTimeout: 14000,
           baseUrl: Endpoints.BASE_URL,
           headers: {
             'Content-Type': 'application/json',
@@ -114,6 +117,17 @@ Future<void> init() async {
   sl.registerLazySingleton<OrdersRemoteDataSource>(
         () => OrdersRemoteDataSourceImpl(dio: sl(), networkInfo: sl()),
   );
+  sl.registerLazySingleton<AddCommentRemoteDataSource>(
+        () => AddCommentRemoteDataSourceImpl(dio: sl(), networkInfo: sl()),
+  );
+  sl.registerLazySingleton<UserUpdateRemoteDataSource>(
+        () => UserUpdateRemoteDataSourceImpl(
+            dio: sl(), networkInfo: sl()),
+  );
+  sl.registerLazySingleton<ContactUsRemoteDataSource>(
+        () => ContactUsRemoteDataSourceImpl(
+        dio: sl(), networkInfo: sl()),
+  );
 
 
   // Bloc
@@ -135,7 +149,10 @@ Future<void> init() async {
     productRemoteDataSource: sl(),
     categoryRemoteDataSource: sl(),
     notificationRemoteDataSource: sl(),
-    ordersRemoteDataSource: sl()
+    ordersRemoteDataSource: sl(),
+    addCommentRemoteDataSource: sl(),
+    userUpdateRemoteDataSource: sl(),
+    contactUsRemoteDataSource: sl()
   ));
 
 

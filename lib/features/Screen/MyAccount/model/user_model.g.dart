@@ -10,7 +10,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
   return UserModel(
     data: json['data'] == null
         ? null
-        : Data.fromJson(json['data'] as Map<String, dynamic>),
+        : UserData.fromJson(json['data'] as Map<String, dynamic>),
   );
 }
 

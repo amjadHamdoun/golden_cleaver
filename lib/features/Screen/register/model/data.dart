@@ -6,8 +6,10 @@ part 'data.g.dart';
 @JsonSerializable()
 class Data {
 
-
+  final int? id;
   final String? api_token;
+  final String? name;
+
 
   Map<String, dynamic> toJson() => _$DataToJson(this);
   factory Data.fromJson(Map<String, dynamic> json) =>
@@ -16,5 +18,8 @@ class Data {
   Data(
       {
         required  this.api_token,
+        required  this.id,
+        required this.name
+
       });
 }

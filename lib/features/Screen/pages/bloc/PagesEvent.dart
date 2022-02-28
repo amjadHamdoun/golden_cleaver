@@ -44,7 +44,39 @@ class SetCartsEvent extends PagesEvents {
    List<Basket> carts;
    SetCartsEvent(this.carts);
 }
+// ignore: must_be_immutable
+class AddCommentEvent extends PagesEvents {
+   int productId;
+   String content;
+  AddCommentEvent({required this.content,required this.productId});
+}
+// ignore: must_be_immutable
+class UpdateUserEvent extends PagesEvents {
+  String name;
+  String email;
+  String city;
+  String mobile;
+  UpdateUserEvent({
+    required this.name,
+    required this.email,
+    required this.city,
+    required this.mobile,
 
+  });
+}
 
+// ignore: must_be_immutable
+class ContactUsEvent extends PagesEvents {
+  String name;
+  String address;
+  String content;
+  String phone;
+  ContactUsEvent({
+    required this.name,
+    required this.address,
+    required this.content,
+    required this.phone,
 
+  });
+}
 

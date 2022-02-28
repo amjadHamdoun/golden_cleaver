@@ -9,7 +9,7 @@ part of 'city_model.dart';
 CityModel _$CityModelFromJson(Map<String, dynamic> json) {
   return CityModel(
     data: (json['data'] as List<dynamic>?)
-        ?.map((e) => Data.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => CityData.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }

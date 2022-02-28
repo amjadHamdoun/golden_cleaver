@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +10,7 @@ import 'package:golden_cleaver/Globals.dart';
 import 'package:golden_cleaver/core/utils/light_theme_colors.dart';
 import 'package:golden_cleaver/features/Screen/bank_transfer/bloc/MyBankBloc.dart';
 import 'package:golden_cleaver/features/Screen/bank_transfer/bloc/myBank_state.dart';
+import 'package:golden_cleaver/features/Screen/pages/pages.dart';
 import 'package:golden_cleaver/features/Screen/payment_type/payment_type.dart';
 import 'package:golden_cleaver/injection.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -37,14 +38,18 @@ class _AddAddressState extends State<AddAddress>   {
   void initState() {
     print(Global.userToken);
     widget.bloc.onResetEvent();
+    widget.bloc.onGetCitiesEvent();
+    widget.bloc.onGetSectionsEvent();
+    widget.bloc.onChangeLatLonEvent(
+        21.437273,
+        40.512714);
     MarkerId markerId = MarkerId('orgin');
     Marker marker =
     Marker(markerId: markerId,
         icon: BitmapDescriptor.defaultMarker ,
         position: center);
     markers[markerId] = marker;
-    widget.bloc.onGetCitiesEvent();
-    widget.bloc.onGetSectionsEvent();
+
     super.initState();
   }
 
@@ -136,7 +141,7 @@ class _AddAddressState extends State<AddAddress>   {
                           ),
                         ),
                         Container(
-                          width: 22.w,
+
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: LightThemeColors.darkBackgroundColor,
@@ -144,6 +149,7 @@ class _AddAddressState extends State<AddAddress>   {
                           ),
                           child: Icon(
                             Icons.close,
+                            size: 20.w,
                             color: LightThemeColors.backgroundColor,
                           ),
                         ),
@@ -186,7 +192,7 @@ class _AddAddressState extends State<AddAddress>   {
                       ),
                     ) ,
                   ),
-                  SizedBox(height: 10.h,),
+                  SizedBox(height: 20.h,),
                   SizedBox(
                     height: 299.h,
                     width: ScreenUtil().screenWidth - 40,
@@ -223,6 +229,23 @@ class _AddAddressState extends State<AddAddress>   {
 
                         });
                       },
+                      onCameraMove:
+                          (CameraPosition _position) {
+                        MarkerId markerId =
+                        MarkerId('orgin');
+                        Marker marker = Marker(
+                            markerId: markerId,
+                            icon: BitmapDescriptor
+                                .defaultMarker,
+                            position: _position.target);
+                        markers[markerId] = marker;
+                        widget.bloc.onChangeLatLonEvent(
+                            _position.target.latitude ,
+                            _position.target.longitude);
+
+                        setState(() {});
+                      },
+
                       initialCameraPosition: CameraPosition(
                         target: state.center!,
                         zoom: 15,
@@ -402,7 +425,7 @@ class _AddAddressState extends State<AddAddress>   {
                     children: [
                       Column(
                         children: [
-                          Text(' المنزل',
+                          Text('رقم المنزل',
                             style: TextStyle(
                                 fontSize: 16.sp,
                                 color: LightThemeColors.darkBackgroundColor,
@@ -414,11 +437,15 @@ class _AddAddressState extends State<AddAddress>   {
                             height: 10.h,
                           ),
                           SizedBox(
-                            width: 0.35.sw,
+                            width: 0.45.sw,
 
                             child: Align(
                               alignment: Alignment.center,
                               child: TextField(
+                              keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 onChanged: (va){
                                   widget.bloc.onChangeHomeEvent(va);
                                 },
@@ -439,7 +466,7 @@ class _AddAddressState extends State<AddAddress>   {
                                       borderSide: BorderSide(color: LightThemeColors.darkBackgroundColor, width: 2.0),
                                       borderRadius: BorderRadius.circular(12)
                                   ),
-                                  hintText: 'المنزل',
+                                  hintText: 'رقم المنزل',
                                 ),
 
                               ),
@@ -448,7 +475,7 @@ class _AddAddressState extends State<AddAddress>   {
                         ],
                       ),
                       SizedBox(
-                        width: 30.w,
+                        width: 10.w,
                       ),
                       Column(
                         children: [
@@ -464,7 +491,7 @@ class _AddAddressState extends State<AddAddress>   {
                             height: 10.h,
                           ),
                           SizedBox(
-                            width: 0.35.sw,
+                            width: 0.45.sw,
 
                             child: Align(
                               alignment: Alignment.center,
@@ -590,6 +617,123 @@ class _AddAddressState extends State<AddAddress>   {
 
                 ],
               ),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+
+              showUnselectedLabels: true,
+              onTap: (int index) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Pages(
+                          restCart: false,
+                          pageNumber: index,
+                        ),
+                  ),
+                      (route) => false,
+                );
+              },
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/house-damage.svg',
+                      color:
+                      LightThemeColors.lightGreyShade400,
+                    ),
+                    title: Text('الرئيسية',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        color:
+                        LightThemeColors.lightGreyShade400,
+                      ),
+                    )
+
+                ),
+
+                // BottomNavigationBarItem(
+                //     icon: SvgPicture.asset('assets/icons/dice.svg',
+                //       color: select == 1 ? LightThemeColors.primaryColor :
+                //       LightThemeColors.lightGreyShade400,
+                //     ),
+                //     title: Text('الاقسام',
+                //       style: TextStyle(
+                //         fontSize: 15.sp,
+                //         color: select == 1 ? LightThemeColors.primaryColor :
+                //         LightThemeColors.lightGreyShade400,
+                //       ),
+                //     )
+                //
+                // ),
+
+                BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/copy.svg',
+                      color:
+                      LightThemeColors.lightGreyShade400,
+                    ),
+                    title: Text('طلباتي',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        color:
+                        LightThemeColors.lightGreyShade400,
+                      ),
+                    )
+
+                ),
+                BottomNavigationBarItem(
+                    icon: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        SvgPicture.asset('assets/icons/shopping-basket.svg',
+                          color:
+                          LightThemeColors.lightGreyShade400,
+                        ),
+                        if(state.carts!.length>0)
+                          Positioned(
+                            left: 20.w,
+                            bottom: 10.h,
+                            child: Container(
+                              child: Text(state.carts!.length.toString(),
+                                style: TextStyle(
+                                    color: LightThemeColors.backgroundColor,
+                                    fontSize: 12.sp
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              width: 23.w,
+                              height: 23.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:
+                                LightThemeColors.lightGreyShade400,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                    title: Text('السلة',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        color:
+                        LightThemeColors.lightGreyShade400,
+                      ),
+                    )
+
+                ),
+                BottomNavigationBarItem(
+                    icon: SvgPicture.asset('assets/icons/user-circle.svg',
+                      color:
+                      LightThemeColors.lightGreyShade400,
+                    ),
+                    title: Text('حسابي',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        color:
+                        LightThemeColors.lightGreyShade400,
+                      ),
+                    )
+
+                ),
+              ],
             ),
           ),
         );

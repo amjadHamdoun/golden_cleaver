@@ -72,10 +72,11 @@ part 'pages_state.g.dart';
       ..categoryModel=CategoryModel(data: [])
       ..errorMessage = ''
       ..carts=[]
-      ..userModel=UserModel(data: Data(
+      ..userModel=UserModel(data: UserData(
           email: '',
           name: '',
-          photo: '',
+          mobile: '',
+
         ))
         ..notificationModel=NotificationModel(data: [])
 

@@ -69,9 +69,9 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
                  });
                },
               ),
-              Category(
-                bloc: bloc,
-              ),
+              // Category(
+              //   bloc: bloc,
+              // ),
               Orders(
                 bloc: bloc,
               ),
@@ -80,6 +80,13 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
               ),
               MyAccount(
                 bloc: bloc,
+                goMyOrders: (){
+                  controller.jumpToPage(1);
+                  select = 1;
+                  setState(() {
+
+                  });
+                },
               ),
 
 
@@ -111,30 +118,30 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
 
               ),
 
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icons/dice.svg',
-                    color: select == 1 ? LightThemeColors.primaryColor :
-                    LightThemeColors.lightGreyShade400,
-                  ),
-                  title: Text('الاقسام',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      color: select == 1 ? LightThemeColors.primaryColor :
-                      LightThemeColors.lightGreyShade400,
-                    ),
-                  )
-
-              ),
+              // BottomNavigationBarItem(
+              //     icon: SvgPicture.asset('assets/icons/dice.svg',
+              //       color: select == 1 ? LightThemeColors.primaryColor :
+              //       LightThemeColors.lightGreyShade400,
+              //     ),
+              //     title: Text('الاقسام',
+              //       style: TextStyle(
+              //         fontSize: 15.sp,
+              //         color: select == 1 ? LightThemeColors.primaryColor :
+              //         LightThemeColors.lightGreyShade400,
+              //       ),
+              //     )
+              //
+              // ),
 
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icons/copy.svg',
-                    color: select == 2 ? LightThemeColors.primaryColor :
+                    color: select == 1 ? LightThemeColors.primaryColor :
                     LightThemeColors.lightGreyShade400,
                   ),
                   title: Text('طلباتي',
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: select == 2 ? LightThemeColors.primaryColor :
+                      color: select == 1 ? LightThemeColors.primaryColor :
                       LightThemeColors.lightGreyShade400,
                     ),
                   )
@@ -145,7 +152,7 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
                     clipBehavior: Clip.none,
                     children: [
                       SvgPicture.asset('assets/icons/shopping-basket.svg',
-                        color: select == 3 ? LightThemeColors.primaryColor :
+                        color: select == 2 ? LightThemeColors.primaryColor :
                         LightThemeColors.lightGreyShade400,
                       ),
                       if(state.carts!.length>0)
@@ -164,7 +171,7 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
                           height: 23.w,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: select == 3 ? LightThemeColors.primaryColor :
+                            color: select == 2 ? LightThemeColors.primaryColor :
                             LightThemeColors.lightGreyShade400,
                           ),
                         ),
@@ -174,7 +181,7 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
                   title: Text('السلة',
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: select ==3 ? LightThemeColors.primaryColor :
+                      color: select ==2 ? LightThemeColors.primaryColor :
                       LightThemeColors.lightGreyShade400,
                     ),
                   )
@@ -182,13 +189,13 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
               ),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icons/user-circle.svg',
-                    color: select == 4 ? LightThemeColors.primaryColor :
+                    color: select == 3 ? LightThemeColors.primaryColor :
                     LightThemeColors.lightGreyShade400,
                   ),
                   title: Text('حسابي',
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: select == 4 ? LightThemeColors.primaryColor :
+                      color: select == 3 ? LightThemeColors.primaryColor :
                       LightThemeColors.lightGreyShade400,
                     ),
                   )

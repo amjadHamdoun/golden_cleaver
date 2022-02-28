@@ -2,6 +2,7 @@ import 'package:golden_cleaver/features/Screen/category/model/size_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'addition_model.dart';
+import 'comment_model.dart';
 import 'data.dart';
 
 
@@ -16,6 +17,7 @@ class ProductModel {
   final String? content;
   List<SizeModel> sizes;
   List<AdditionModel> additions;
+  List<CommentModel> comments;
 
 
   Map<String, dynamic> toJson() => _$ProductModelToJson(this);
@@ -30,6 +32,7 @@ class ProductModel {
         required  this.content,
         required  this.sizes,
         required  this.additions,
+        required this.comments,
 
       });
 }

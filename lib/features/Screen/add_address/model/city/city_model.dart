@@ -8,7 +8,7 @@ part 'city_model.g.dart';
 @JsonSerializable()
 class CityModel {
 
-  List<Data>? data;
+  List<CityData>? data;
 
 
   Map<String, dynamic> toJson() => _$CityModelToJson(this);

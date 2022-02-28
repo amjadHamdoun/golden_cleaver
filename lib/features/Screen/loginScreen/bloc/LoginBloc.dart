@@ -36,7 +36,10 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
             statue: false,
             message: '',
             data: Data(
-                api_token: ''
+                api_token: '',
+                 id: 0,
+                 name: ''
+
             )
         )
       );
@@ -59,6 +62,10 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
           {
             Preferences.saveUserToken(r.data!.api_token!);
             Global.userToken=r.data!.api_token;
+            Preferences.saveUserId(r.data!.id!);
+            Global.userId=r.data!.id;
+            Preferences.saveUserName(r.data!.name!);
+
           }
 
         yield state.rebuild((b) => b

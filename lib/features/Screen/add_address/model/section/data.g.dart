@@ -6,8 +6,8 @@ part of 'data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Data _$DataFromJson(Map<String, dynamic> json) {
-  return Data(
+SectionData _$SectionDataFromJson(Map<String, dynamic> json) {
+  return SectionData(
     id: json['id'] as int?,
     name: json['name'] as String?,
     area_id: json['area_id'] as int?,
@@ -16,7 +16,8 @@ Data _$DataFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+Map<String, dynamic> _$SectionDataToJson(SectionData instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'country_id': instance.country_id,

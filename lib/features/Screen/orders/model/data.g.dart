@@ -22,6 +22,11 @@ Data _$DataFromJson(Map<String, dynamic> json) {
         .map((e) => CartModel.fromJson(e as Map<String, dynamic>))
         .toList(),
     payment_method: json['payment_method'] as String?,
+    home: json['home'] as String?,
+    street: json['street'] as String?,
+    city: CityData.fromJson(json['city'] as Map<String, dynamic>),
+    description: json['description'] as String?,
+    section: SectionData.fromJson(json['section'] as Map<String, dynamic>),
   );
 }
 
@@ -35,5 +40,10 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'status_ar': instance.status_ar,
       'delivery_price': instance.delivery_price,
       'carts': instance.carts,
+      'section': instance.section,
       'payment_method': instance.payment_method,
+      'home': instance.home,
+      'description': instance.description,
+      'street': instance.street,
+      'city': instance.city,
     };

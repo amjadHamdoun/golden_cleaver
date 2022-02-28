@@ -8,7 +8,7 @@ part 'section_model.g.dart';
 @JsonSerializable()
 class SectionModel {
 
-  List<Data>? data;
+  List<SectionData>? data;
 
 
   Map<String, dynamic> toJson() => _$SectionModelToJson(this);

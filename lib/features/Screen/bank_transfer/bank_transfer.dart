@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:golden_cleaver/core/utils/light_theme_colors.dart';
 import 'package:golden_cleaver/features/Screen/bank_transfer/bloc/MyBankBloc.dart';
@@ -607,6 +608,123 @@ class _BankTransferState extends State<BankTransfer> {
 
                   ],
                 ),
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+
+                showUnselectedLabels: true,
+                onTap: (int index) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          Pages(
+                            restCart: false,
+                            pageNumber: index,
+                          ),
+                    ),
+                        (route) => false,
+                  );
+                },
+                items: <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/house-damage.svg',
+                        color:
+                        LightThemeColors.lightGreyShade400,
+                      ),
+                      title: Text('الرئيسية',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color:
+                          LightThemeColors.lightGreyShade400,
+                        ),
+                      )
+
+                  ),
+
+                  // BottomNavigationBarItem(
+                  //     icon: SvgPicture.asset('assets/icons/dice.svg',
+                  //       color: select == 1 ? LightThemeColors.primaryColor :
+                  //       LightThemeColors.lightGreyShade400,
+                  //     ),
+                  //     title: Text('الاقسام',
+                  //       style: TextStyle(
+                  //         fontSize: 15.sp,
+                  //         color: select == 1 ? LightThemeColors.primaryColor :
+                  //         LightThemeColors.lightGreyShade400,
+                  //       ),
+                  //     )
+                  //
+                  // ),
+
+                  BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/copy.svg',
+                        color:
+                        LightThemeColors.lightGreyShade400,
+                      ),
+                      title: Text('طلباتي',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color:
+                          LightThemeColors.lightGreyShade400,
+                        ),
+                      )
+
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          SvgPicture.asset('assets/icons/shopping-basket.svg',
+                            color:
+                            LightThemeColors.lightGreyShade400,
+                          ),
+                          if(state.carts!.length>0)
+                            Positioned(
+                              left: 20.w,
+                              bottom: 10.h,
+                              child: Container(
+                                child: Text(state.carts!.length.toString(),
+                                  style: TextStyle(
+                                      color: LightThemeColors.backgroundColor,
+                                      fontSize: 12.sp
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                width: 23.w,
+                                height: 23.w,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color:
+                                  LightThemeColors.lightGreyShade400,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      title: Text('السلة',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color:
+                          LightThemeColors.lightGreyShade400,
+                        ),
+                      )
+
+                  ),
+                  BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/user-circle.svg',
+                        color:
+                        LightThemeColors.lightGreyShade400,
+                      ),
+                      title: Text('حسابي',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color:
+                          LightThemeColors.lightGreyShade400,
+                        ),
+                      )
+
+                  ),
+                ],
               ),
             ),
           ),

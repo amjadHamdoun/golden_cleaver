@@ -27,7 +27,7 @@ class OrdersRemoteDataSourceImpl extends OrdersRemoteDataSource {
         final re = await dio.get(
           Endpoints.Orders,
           queryParameters: {
-            'api_token':Global.userToken
+            'user_id':Global.userId
           }
         );
         print(re);

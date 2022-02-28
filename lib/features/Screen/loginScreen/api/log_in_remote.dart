@@ -40,7 +40,9 @@ class LogInRemoteDataSourceImpl extends LogInRemoteDataSource {
             )
             );
 
+        print("re");
         print(re);
+        print("re");
         return Right(LoginResponseModel.fromJson(json.decode(re.data)));
       } on DioError catch (ex) {
         if (ex.type == DioErrorType.connectTimeout) {
@@ -58,14 +60,5 @@ class LogInRemoteDataSourceImpl extends LogInRemoteDataSource {
     else {
       return Left(Er.networkError);
     }
-
-
-
-
-
   }
-
-
-
-
 }

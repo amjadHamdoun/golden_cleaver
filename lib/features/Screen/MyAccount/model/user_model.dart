@@ -8,7 +8,7 @@ part 'user_model.g.dart';
 @JsonSerializable()
 class UserModel {
 
-  final Data? data;
+  final UserData? data;
 
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);

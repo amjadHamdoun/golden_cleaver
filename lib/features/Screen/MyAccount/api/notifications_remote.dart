@@ -25,11 +25,14 @@ class NotificationRemoteDataSourceImpl extends NotificationRemoteDataSource {
   Future< Either<String, NotificationModel>> getNotification() async {
     if (await networkInfo.hasConnection) {
       try {
+        int? userId=Global.userId;
         final re = await dio.get(
-          Endpoints.Notifications,
+          Endpoints.Notifications+'?user_id=$userId',
             );
 
+        print('re');
         print(re);
+        print('re');
         return Right(NotificationModel.fromJson(json.decode(re.data)));
       } on DioError catch (ex) {
         if (ex.type == DioErrorType.connectTimeout) {

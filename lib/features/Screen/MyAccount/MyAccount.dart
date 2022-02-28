@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,13 +8,17 @@ import 'package:golden_cleaver/Preference.dart';
 import 'package:golden_cleaver/core/utils/light_theme_colors.dart';
 import 'package:golden_cleaver/features/Screen/contact_us/contanctUsScreen.dart';
 import 'package:golden_cleaver/features/Screen/mainlog/mainlogscreen.dart';
+import 'package:golden_cleaver/features/Screen/notifications/notifications.dart';
 import 'package:golden_cleaver/features/Screen/pages/bloc/PagesBloc.dart';
 import 'package:golden_cleaver/features/Screen/pages/bloc/pages_state.dart';
 import 'package:golden_cleaver/features/Screen/who_are_we/WhoWeScreen.dart';
 
+import 'account_detalies.dart';
+
 class MyAccount extends StatefulWidget {
   PagesBloc bloc;
-   MyAccount({Key? key,required this.bloc}) : super(key: key);
+  VoidCallback goMyOrders;
+   MyAccount({Key? key,required this.bloc,required this.goMyOrders}) : super(key: key);
 
   @override
   _MyAccountState createState() => _MyAccountState();
@@ -36,6 +39,7 @@ class _MyAccountState extends State<MyAccount> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -105,6 +109,8 @@ class _MyAccountState extends State<MyAccount> with AutomaticKeepAliveClientMixi
                                     widget.bloc.onSetCartsEvent([]);
                                     Preferences.saveUserToken('');
                                     Global.userToken='';
+                                    Preferences.saveUserId(0);
+                                    Global.userId=0;
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(builder: (context) => MainLog()),
@@ -167,6 +173,22 @@ class _MyAccountState extends State<MyAccount> with AutomaticKeepAliveClientMixi
                                             child: Column(
                                               children: [
                                                 InkWell(
+                                                  onTap: (){
+                                                    print("state.userModel!.data!");
+                                                    print(state.userModel!.data!.name);
+                                                    print(state.userModel!.data!);
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(builder: (context) =>  AccountDetails(
+                                                       userMyaccountModel: state.userModel!.data!,
+                                                      )),
+                                                    ).then((value) {
+                                                      if(value is bool)
+                                                        {
+                                                          widget.bloc.onUserDetailsEvent();
+                                                        }
+                                                    });
+                                                  },
                                                   child: SvgPicture.asset(
                                                     'assets/icons/Refreshmydata.svg',
                                                     height: 30.h,
@@ -201,6 +223,9 @@ class _MyAccountState extends State<MyAccount> with AutomaticKeepAliveClientMixi
                                                       width: 5.w,
                                                     ),
                                                     InkWell(
+                                                      onTap: (){
+                                                        widget.goMyOrders();
+                                                      },
                                                       child: SvgPicture.asset(
                                                         'assets/icons/MyOrders.svg',
                                                         height: 30.h,
@@ -230,7 +255,14 @@ class _MyAccountState extends State<MyAccount> with AutomaticKeepAliveClientMixi
                                             child: Column(
                                               children: [
                                                 InkWell(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(builder: (context) =>  Notifications(
+                                                        notificationModel: state.notificationModel!,
+                                                      )),
+                                                    );
+                                                  },
                                                   child: Stack(
                                                     clipBehavior: Clip.none,
                                                     children: [
